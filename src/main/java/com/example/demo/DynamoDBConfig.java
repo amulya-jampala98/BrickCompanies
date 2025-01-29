@@ -28,4 +28,7 @@ public class DynamoDBConfig {
                                 AwsBasicCredentials.create(accessKey, secretKey)))
                 .build();
     }
+
+
+
 }
