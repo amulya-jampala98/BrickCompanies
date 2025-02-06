@@ -1,85 +1,83 @@
 package com.example.demo;
 
-import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBAttribute;
-import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBHashKey;
-import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBRangeKey;
-import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTable;
-import jdk.jfr.DataAmount;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.DynamoDbBean;
+import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.DynamoDbPartitionKey;
+import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.DynamoDbSortKey;
+import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.DynamoDbAttribute;
 
-import java.util.*;
+import java.util.List;
+import java.util.Map;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@DynamoDBTable(tableName = "BrickCompanies"  )
+@DynamoDbBean // Required for Enhanced Client
 public class Company {
 
-    @DynamoDBHashKey(attributeName = "companyId")
     private String companyId;
-
-    @DynamoDBRangeKey(attributeName = "companyName")
     private String companyName;
-
-    @DynamoDBAttribute(attributeName = "brickTypes")
     private List<String> brickTypes;
-
-    @DynamoDBAttribute(attributeName = "imageUrl")
     private String imageUrl;
-
-    @DynamoDBAttribute(attributeName = "pricePerBrickType")
     private Map<String, Double> pricePerBrickType;
-
-    @DynamoDBAttribute(attributeName = "unitSizes")
     private List<Integer> unitSizes;
 
+    // Partition Key (Primary Key)
+    @DynamoDbPartitionKey
     public String getCompanyId() {
         return companyId;
-    }
-
-    public String getCompanyName() {
-        return companyName;
-    }
-
-    public List<String> getBrickTypes() {
-        return brickTypes;
-    }
-
-    public String getImageUrl() {
-        return imageUrl;
-    }
-
-    public Map<String, Double> getPricePerBrickType() {
-        return pricePerBrickType;
     }
 
     public void setCompanyId(String companyId) {
         this.companyId = companyId;
     }
 
+    // Sort Key (Secondary Key)
+    @DynamoDbSortKey
+    public String getCompanyName() {
+        return companyName;
+    }
+
     public void setCompanyName(String companyName) {
         this.companyName = companyName;
+    }
+
+    // Attribute Mapping
+    @DynamoDbAttribute("brickTypes")
+    public List<String> getBrickTypes() {
+        return brickTypes;
     }
 
     public void setBrickTypes(List<String> brickTypes) {
         this.brickTypes = brickTypes;
     }
 
+    @DynamoDbAttribute("imageUrl")
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
+    }
+
+    @DynamoDbAttribute("pricePerBrickType")
+    public Map<String, Double> getPricePerBrickType() {
+        return pricePerBrickType;
     }
 
     public void setPricePerBrickType(Map<String, Double> pricePerBrickType) {
         this.pricePerBrickType = pricePerBrickType;
     }
 
-    public void setUnitSizes(List<Integer> unitSizes) {
-        this.unitSizes = unitSizes;
-    }
-
+    @DynamoDbAttribute("unitSizes")
     public List<Integer> getUnitSizes() {
         return unitSizes;
+    }
+
+    public void setUnitSizes(List<Integer> unitSizes) {
+        this.unitSizes = unitSizes;
     }
 }

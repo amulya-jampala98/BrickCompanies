@@ -2,7 +2,6 @@ package com.example.demo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.ComponentScan;
-import org.socialsignin.spring.data.dynamodb.repository.config.EnableDynamoDBRepositories;
 
 
 
@@ -10,6 +9,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
+@ComponentScan(basePackages = "com.example.demo")
 public class BricksCompanyApplication implements CommandLineRunner {
 
 	@Autowired

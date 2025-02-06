@@ -6,7 +6,7 @@ import software.amazon.awssdk.auth.credentials.StaticCredentialsProvider;
 import software.amazon.awssdk.regions.Region;
 import software.amazon.awssdk.services.dynamodb.DynamoDbClient;
 import org.springframework.beans.factory.annotation.Value;
-
+import software.amazon.awssdk.enhanced.dynamodb.DynamoDbEnhancedClient;
 
 @Configuration
 public class DynamoDBConfig {
@@ -29,6 +29,11 @@ public class DynamoDBConfig {
                 .build();
     }
 
-
+    @Bean
+    public DynamoDbEnhancedClient dynamoDbEnhancedClient(DynamoDbClient dynamoDbClient) {
+        return DynamoDbEnhancedClient.builder()
+                .dynamoDbClient(dynamoDbClient)
+                .build();
+    }
 
 }
