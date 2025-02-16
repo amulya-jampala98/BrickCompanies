@@ -1,6 +1,5 @@
 package com.example.demo;
 
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.ResponseEntity;
@@ -13,20 +12,18 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/companies")
-@Slf4j
+
 public class CompanyController {
 
-    private final CompanyService companyService;
-
     @Autowired
-    public CompanyController(CompanyService companyService) {
-        this.companyService = companyService;
-    }
+    public CompanyService companyService;
 
     @GetMapping
-    public ResponseEntity<List<CompanyDTO>> getAllCompanies() {
-        List<CompanyDTO> companies = companyService.getAllCompanies();
-        return ResponseEntity.ok(companies);
+    public ResponseEntity<List<Company>> getAllCompanies(){
+        System.out.print("Entered to Controller Class");
+        return ResponseEntity.ok(companyService.getAllCompanies());
+
     }
+
 
 }
